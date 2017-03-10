@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>PHP</title>
+    <link rel="stylesheet" href="order-form.css">
+</head>
+<body>
+    <section>
+        
+        <h2><?= $customersInfo ['customerName'] ?></h2>
+        <h3><?= $customersInfo  ['contactLastName'] ?></h3>
+        <h3><?= $customersInfo ['contactFirstName'] ?></h3>
+        <p><?= $customersInfo ['addressLine1'] ?></p>
+        <p><?= $customersInfo ['addressLine2'] ?></p>
+        <p><?= $customersInfo ['city'] ?></p>
+        <hr />
+
+        <table class="standard-table">
+            <caption>Détail de la commande number <?= $_GET['orderNumber']?> </caption>
+            <thead>
+<!--                 <tr>
+                    <th>Commande</th>
+                    <th>Product Code</th>
+                    <th>Product Name</th>
+                    <th>Quantity Ordered</th>
+                    <th>Price </th>
+                </tr> -->
+                <tr>
+                    <th>Product Code</th>
+                    <th>Product Name</th>
+                    <th>Price Unit</th>
+                    <th>Quantity</th>
+                    <th>Prix total</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <?php $totalHT = 0; ?>
+                <?php for($i=0; $i < count($orderDetails); $i++){ ?>
+                    
+                    <?php $orderDetail = $orderDetails[$i];
+                    $totalHT += $orderDetail['total']; 
+                    ?>
+<!--                     <tr>
+                            <td><?= $orderDetail['orderNumber']     ?></td>  
+                            <td><?= $orderDetail['productCode']     ?></td>
+                            <td><?= $orderDetail['productName']     ?></td>
+                            <td><?= $orderDetail['quantityOrdered'] ?></td>
+                            <td><?= $orderDetail['priceEach']       ?></td>
+                            <td><?= $orderDetail['orderLineNumber'] ?></td>
+                    </tr> -->
+
+                    <tr>
+                            <td><?= $orderDetail['productCode']     ?></td>  
+                            <td><?= $orderDetail['productName']     ?></td>
+                            <td><?= $orderDetail['priceEach']       ?></td>
+                            <td><?= $orderDetail['quantityOrdered'] ?></td>
+                            <td><?= $orderDetail['total']           ?></td>
+                    </tr>
+
+                <?php } ?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>Montant HT</th>
+                    <td><?= $totalHT ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>TVA</th>
+                    <td><?php $TVA = $totalHT * (20/100); echo ROUND($TVA,2); ?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <th>Montant TTC</th>
+                    <td><?= ROUND($totalHT + $TVA,2)?></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>
